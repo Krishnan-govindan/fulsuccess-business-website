@@ -66,7 +66,7 @@ const HeaderAuth = () => {
       : user?.email;
 
   return (
-    <div className="absolute right-0 top-0 z-20 flex max-w-[calc(100%-1.5rem)] items-center gap-2 p-4 sm:p-6">
+    <div className="absolute right-0 top-14 z-20 flex max-w-[calc(100%-1.5rem)] items-center gap-2 p-4 sm:top-0 sm:p-6">
       {user ? (
         <>
           <span className="hidden max-w-44 items-center gap-2 truncate rounded-md border border-primary/30 bg-background/80 px-3 py-2 text-sm text-foreground sm:flex">
