@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794386088967,
+      "tag": "0000_create_user_profiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794386199224,
+      "tag": "0001_profile_avatar_metadata",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794386241095,
+      "tag": "0002_restrict_profile_trigger_execution",
+      "breakpoints": true
+    }
+  ]
+}

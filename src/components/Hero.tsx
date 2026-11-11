@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Brain, Zap } from "lucide-react";
 import heroImage from "@/assets/hero-ai-brain.jpg";
+import HeaderAuth from "@/components/HeaderAuth";
 
 const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -26,6 +27,7 @@ const Hero = () => {
           fulsuccess
         </h2>
       </div>
+      <HeaderAuth />
 
       {/* Animated Background */}
       <div 
