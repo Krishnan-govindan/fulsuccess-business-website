@@ -41,6 +41,11 @@
     --border: 217 32% 25%;
     --input: 217 32% 17%;
     --ring: 180 100% 50%;
+
+    /* Google Sign-In branded dark button */
+    --google-button-background: #131314;
+    --google-button-border: #8E918F;
+    --google-button-foreground: #E3E3E3;
     
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
