@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,7 +20,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Send, Calendar } from "lucide-react";
-import { CALENDLY_URL } from "@/lib/site";
+import { CALENDLY_URL, FORMSPREE_ENDPOINT } from "@/lib/site";
 
 const services = [
   "Social Media Ads Creation",
@@ -59,9 +60,22 @@ const ContactForm = () => {
         form.reset();
         setConsentChecked(false);
         setShowSuccessDialog(true);
+      } else {
+        // Formspree returns field-level errors on 4xx responses.
+        let message = "Something went wrong. Please try again.";
+        try {
+          const data = await response.json();
+          if (Array.isArray(data?.errors) && data.errors.length > 0) {
+            message = data.errors.map((err: { message: string }) => err.message).join(" ");
+          }
+        } catch {
+          /* ignore JSON parse errors */
+        }
+        toast.error(message);
       }
     } catch (error) {
       console.error("Form submission error:", error);
+      toast.error("Couldn't send your inquiry. Please check your connection and try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -84,17 +98,35 @@ const ContactForm = () => {
         {/* Form Card */}
         <div className="glass-card p-6 sm:p-8">
           <form
-            action="https://formspree.io/f/xzzjlqlo"
+            action={FORMSPREE_ENDPOINT}
             method="POST"
             onSubmit={handleSubmit}
             className="space-y-6"
           >
+            {/* Subject line for the Formspree notification email */}
+            <input type="hidden" name="_subject" value="New inquiry from fulsuccess.com" />
+
             {/* Name Field */}
             <div className="space-y-2">
               <Label htmlFor="name" className="font-semibold text-foreground">
                 Full Name *
               </Label>
               <Input id="name" name="name" type="text" placeholder="John Doe" required className={inputClasses} />
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="font-semibold text-foreground">
+                Email Address *
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+                className={inputClasses}
+              />
             </div>
 
             {/* WhatsApp Number Field with Country Code */}
@@ -189,7 +221,7 @@ const ContactForm = () => {
                 className="mt-1"
               />
               <Label htmlFor="consent" className="cursor-pointer text-sm leading-relaxed text-muted-foreground">
-                I consent to providing my WhatsApp number to receive communication messages regarding my inquiry.
+                I consent to providing my contact details to receive communication messages regarding my inquiry.
                 I understand that I can opt-out at any time. *
               </Label>
             </div>
