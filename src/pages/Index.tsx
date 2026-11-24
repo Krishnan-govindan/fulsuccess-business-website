@@ -1,18 +1,22 @@
+import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Solutions from "@/components/Solutions";
-import ContactForm from "@/components/ContactForm";
+import About from "@/components/About";
 import CTA from "@/components/CTA";
+import Booking from "@/components/Booking";
+import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
     <main className="min-h-screen font-inter">
+      <Navbar />
       <Hero />
-      <About />
       <Solutions />
-      <ContactForm />
+      <About />
       <CTA />
+      <Booking />
+      <ContactForm />
       <Footer />
     </main>
   );

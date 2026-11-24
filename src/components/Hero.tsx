@@ -1,128 +1,76 @@
-import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Brain, Zap } from "lucide-react";
+import { ArrowRight, Calendar, Sparkles } from "lucide-react";
 import heroImage from "@/assets/hero-ai-brain.jpg";
-import HeaderAuth from "@/components/HeaderAuth";
+import { CALENDLY_URL } from "@/lib/site";
+
+const stats = [
+  { value: "500+", label: "Projects delivered" },
+  { value: "95%", label: "Client satisfaction" },
+  { value: "24/7", label: "AI automation" },
+];
 
 const Hero = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Brand Name at Top */}
-      <div className="absolute top-0 left-0 z-20 p-6">
-        <h2 className="font-orbitron font-bold text-4xl md:text-5xl text-white">
-          fulsuccess
-        </h2>
-      </div>
-      <HeaderAuth />
-
-      {/* Animated Background */}
-      <div 
-        className="absolute inset-0 opacity-30"
+    <section
+      id="home"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden pt-28 pb-16"
+    >
+      {/* Background image (very subtle) */}
+      <div
+        className="absolute inset-0 opacity-20"
         style={{
           backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          maskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%)",
         }}
       />
-      
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80" />
-      
-      {/* Floating AI Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-20 w-4 h-4 bg-primary rounded-full animate-pulse opacity-60 float" />
-        <div className="absolute top-40 right-32 w-6 h-6 bg-secondary rounded-full animate-pulse opacity-40 float-delayed" />
-        <div className="absolute bottom-32 left-40 w-3 h-3 bg-neural rounded-full animate-pulse opacity-70 float" />
-        <div className="absolute bottom-20 right-20 w-5 h-5 bg-accent rounded-full animate-pulse opacity-50 float-delayed" />
-      </div>
+      {/* Grid + glow */}
+      <div className="absolute inset-0 grid-bg opacity-40" />
+      <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-primary/20 blur-[120px]" />
+      <div className="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-secondary/15 blur-[120px] float-delayed" />
 
-      {/* Neural Network Lines */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="neural-line top-1/4 left-0 w-1/3" style={{ animationDelay: '0s' }} />
-        <div className="neural-line top-1/2 right-0 w-1/4" style={{ animationDelay: '1s' }} />
-        <div className="neural-line bottom-1/3 left-1/4 w-1/2" style={{ animationDelay: '2s' }} />
-      </div>
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center animate-fade-up">
+        <span className="eyebrow mb-7">
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
+          AI Automation Agency
+        </span>
 
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
-        {/* AI Icons Animation */}
-        <div className="flex justify-center items-center gap-8 mb-8">
-          <Brain className="w-12 h-12 text-primary animate-pulse" />
-          <Sparkles className="w-10 h-10 text-neural animate-pulse" style={{ animationDelay: '0.5s' }} />
-          <Zap className="w-14 h-14 text-secondary animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-
-        {/* Main Headline */}
-        <h1 className="text-6xl md:text-8xl font-orbitron font-bold mb-6 text-glow">
-          <span className="text-gradient-primary">Looking for AI Solutions</span>
-          <br />
-          <span className="text-gradient-neural">to Grow Your Business?</span>
+        <h1 className="font-display text-4xl font-bold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl">
+          Grow your business on
+          <br className="hidden sm:block" />{" "}
+          <span className="text-gradient">autopilot with AI</span>
         </h1>
-        
-        {/* Subheadline */}
-        <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
-          We bring <span className="text-primary font-semibold">AI power</span> to your business with 
-          <span className="text-secondary font-semibold"> automation</span>, 
-          <span className="text-neural font-semibold"> creativity</span>, and 
-          <span className="text-accent font-semibold"> growth-focused strategies</span>.
+
+        <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+          We build AI-powered systems — social media, websites, chatbots, video, and brand clones —
+          that automate the busywork and turn attention into customers.
         </p>
 
-        {/* CTA Button */}
-        <div className="relative inline-block group">
-          <Button 
-            asChild
-            className="btn-ai-primary text-lg px-12 py-6 group-hover:shadow-[0_0_60px_hsl(var(--primary)/0.8)]"
-          >
-            <a 
-              href="https://calendly.com/fulsuccess/ai" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-3"
-            >
-              Book a Free AI Strategy Call
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-300" />
-            </a>
-          </Button>
-          
-          {/* Button Glow Effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-500" />
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-glow w-full sm:w-auto">
+            <Calendar className="h-5 w-5" />
+            Book a Free Strategy Call
+          </a>
+          <a href="#solutions" onClick={(e) => scrollTo(e, "solutions")} className="btn-ghost-outline w-full sm:w-auto">
+            Explore Solutions
+            <ArrowRight className="h-5 w-5" />
+          </a>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-16 flex flex-wrap justify-center gap-8 text-muted-foreground text-sm">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span>AI-Powered Solutions</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Brain className="w-4 h-4 text-neural" />
-            <span>Future-Ready Technology</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-secondary" />
-            <span>Instant Results</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
+        {/* Stats */}
+        <div className="mx-auto mt-16 grid max-w-2xl grid-cols-3 gap-4">
+          {stats.map((s) => (
+            <div key={s.label} className="glass-card px-4 py-6">
+              <div className="font-display text-3xl font-bold text-gradient">{s.value}</div>
+              <div className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -14,6 +14,10 @@ const GoogleMark = () => (
   </svg>
 );
 
+/**
+ * Inline Google auth control (Supabase / Lovable OAuth).
+ * Rendered inside the navbar — no absolute positioning.
+ */
 const HeaderAuth = () => {
   const [user, setUser] = useState<{ email?: string; user_metadata?: Record<string, unknown> } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -65,39 +69,39 @@ const HeaderAuth = () => {
       ? user.user_metadata.name
       : user?.email;
 
-  return (
-    <div className="absolute right-0 top-14 z-20 flex max-w-[calc(100%-1.5rem)] items-center gap-2 p-4 sm:top-0 sm:p-6">
-      {user ? (
-        <>
-          <span className="hidden max-w-44 items-center gap-2 truncate rounded-md border border-primary/30 bg-background/80 px-3 py-2 text-sm text-foreground sm:flex">
-            <UserRound aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
-            <span className="truncate">{displayName}</span>
-          </span>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={handleSignOut}
-            aria-label="Sign out"
-            title="Sign out"
-            className="border-primary/40 bg-background/80 text-foreground hover:bg-background"
-          >
-            <LogOut aria-hidden="true" />
-          </Button>
-        </>
-      ) : (
+  if (user) {
+    return (
+      <div className="flex items-center gap-2">
+        <span className="hidden max-w-40 items-center gap-2 truncate rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-foreground md:flex">
+          <UserRound aria-hidden="true" className="h-4 w-4 shrink-0 text-primary" />
+          <span className="truncate">{displayName}</span>
+        </span>
         <Button
           type="button"
           variant="outline"
-          onClick={handleGoogleSignIn}
-          disabled={busy}
-          className="h-10 gap-[10px] border-[var(--google-button-border)] bg-[var(--google-button-background)] px-3 text-[var(--google-button-foreground)] hover:bg-[var(--google-button-background)] hover:opacity-90"
+          size="icon"
+          onClick={handleSignOut}
+          aria-label="Sign out"
+          title="Sign out"
+          className="border-white/10 bg-white/[0.04] text-foreground hover:bg-white/[0.08]"
         >
-          <GoogleMark />
-          <span>{busy ? "Connecting…" : "Continue with Google"}</span>
+          <LogOut aria-hidden="true" />
         </Button>
-      )}
-    </div>
+      </div>
+    );
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={handleGoogleSignIn}
+      disabled={busy}
+      className="h-10 gap-[10px] border-[var(--google-button-border)] bg-[var(--google-button-background)] px-3 text-[var(--google-button-foreground)] hover:bg-[var(--google-button-background)] hover:opacity-90"
+    >
+      <GoogleMark />
+      <span className="whitespace-nowrap">{busy ? "Connecting…" : "Continue with Google"}</span>
+    </Button>
   );
 };
 

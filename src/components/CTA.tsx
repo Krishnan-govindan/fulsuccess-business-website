@@ -1,123 +1,75 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Rocket, Star, Zap } from "lucide-react";
+import { ArrowRight, Calendar, Rocket, ShieldCheck, Sparkles } from "lucide-react";
 import ctaImage from "@/assets/ai-handshake.jpg";
+import { CALENDLY_URL } from "@/lib/site";
+
+const benefits = [
+  { icon: Rocket, title: "Fast Results", text: "See improvements within the first 30 days." },
+  { icon: Sparkles, title: "Expert Guidance", text: "Work with specialists who know your industry." },
+  { icon: ShieldCheck, title: "Scalable Growth", text: "Solutions that grow right alongside you." },
+];
 
 const CTA = () => {
+  const toBook = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    document.getElementById("book")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: `url(${ctaImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-      
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background" />
+    <section className="relative overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="glass-card relative overflow-hidden px-6 py-16 text-center sm:px-16">
+          {/* Background image + gradient wash */}
+          <div
+            className="absolute inset-0 -z-10 opacity-15"
+            style={{ backgroundImage: `url(${ctaImage})`, backgroundSize: "cover", backgroundPosition: "center" }}
+          />
+          <div className="absolute inset-0 -z-10" style={{ background: "var(--gradient-soft)" }} />
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-20 w-8 h-8 bg-primary/20 rounded-full animate-pulse float" />
-        <div className="absolute top-40 right-32 w-12 h-12 bg-secondary/15 rounded-full animate-pulse float-delayed" />
-        <div className="absolute bottom-20 left-40 w-6 h-6 bg-neural/25 rounded-full animate-pulse float" />
-        <div className="absolute bottom-32 right-20 w-10 h-10 bg-accent/20 rounded-full animate-pulse float-delayed" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Icon Animation */}
-          <div className="flex justify-center items-center gap-6 mb-8">
-            <Rocket className="w-16 h-16 text-primary animate-pulse rotate-3d" />
-            <Star className="w-12 h-12 text-neural animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <Zap className="w-14 h-14 text-secondary animate-pulse" style={{ animationDelay: '1s' }} />
-          </div>
-
-          {/* Main Headline */}
-          <h2 className="text-5xl md:text-7xl font-orbitron font-bold mb-8 text-glow">
-            <span className="text-gradient-primary">Ready to Supercharge</span>
-            <br />
-            <span className="text-gradient-neural">Your Business with AI?</span>
+          <h2 className="mx-auto max-w-3xl font-display text-4xl font-bold leading-tight tracking-tight md:text-5xl">
+            Ready to put your growth <span className="text-gradient">on autopilot?</span>
           </h2>
-
-          {/* Description */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed max-w-3xl mx-auto">
-            Don't let your competitors get ahead. Join the AI revolution and transform your business with 
-            <span className="text-primary font-semibold"> cutting-edge automation</span> and 
-            <span className="text-secondary font-semibold"> intelligent solutions</span>.
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            Don't let competitors get ahead. Book a free strategy session and walk away with a
+            personalized AI roadmap for your business.
           </p>
 
-          {/* Benefits List */}
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="card-ai">
-              <Rocket className="w-8 h-8 text-primary mb-4 mx-auto" />
-              <h3 className="font-orbitron font-semibold text-lg mb-2">Instant Results</h3>
-              <p className="text-muted-foreground text-sm">See improvements within the first 30 days</p>
-            </div>
-            
-            <div className="card-ai">
-              <Star className="w-8 h-8 text-neural mb-4 mx-auto" />
-              <h3 className="font-orbitron font-semibold text-lg mb-2">Expert Guidance</h3>
-              <p className="text-muted-foreground text-sm">Work with AI specialists who understand your industry</p>
-            </div>
-            
-            <div className="card-ai">
-              <Zap className="w-8 h-8 text-secondary mb-4 mx-auto" />
-              <h3 className="font-orbitron font-semibold text-lg mb-2">Scalable Growth</h3>
-              <p className="text-muted-foreground text-sm">Solutions that grow with your business</p>
-            </div>
+          {/* Benefits */}
+          <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-3">
+            {benefits.map((b) => (
+              <div key={b.title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <b.icon className="mx-auto mb-3 h-8 w-8 text-primary" />
+                <h3 className="font-display text-base font-semibold">{b.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{b.text}</p>
+              </div>
+            ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="relative inline-block group mb-8">
-            <Button 
-              asChild
-              className="btn-ai-primary text-xl px-16 py-8 group-hover:shadow-[0_0_80px_hsl(var(--primary)/0.8)]"
-            >
-              <a 
-                href="https://calendly.com/fulsuccess/ai" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-4"
-              >
-                Book a Free Discovery Call
-                <ArrowRight className="w-7 h-7 group-hover:translate-x-3 transition-transform duration-300" />
-              </a>
-            </Button>
-            
-            {/* Enhanced Button Glow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 via-secondary/30 to-neural/30 rounded-xl blur-2xl -z-10 group-hover:blur-3xl transition-all duration-500" />
+          {/* Buttons */}
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-glow w-full sm:w-auto">
+              <Calendar className="h-5 w-5" />
+              Book a Free Discovery Call
+            </a>
+            <a href="#book" onClick={toBook} className="btn-ghost-outline w-full sm:w-auto">
+              See available times
+              <ArrowRight className="h-5 w-5" />
+            </a>
           </div>
 
-          {/* Urgency Text */}
-          <p className="text-lg text-muted-foreground">
-            🚀 <span className="text-primary font-semibold">Limited slots available</span> - 
-            Book your free consultation today and get a 
-            <span className="text-neural font-semibold"> personalized AI strategy</span> for your business.
-          </p>
-
-          {/* Trust Indicators */}
-          <div className="mt-12 flex flex-wrap justify-center gap-8 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              <span className="text-sm">No Long-term Contracts</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
-              <span className="text-sm">30-day Money Back Guarantee</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-neural rounded-full animate-pulse" />
-              <span className="text-sm">Free Strategy Session</span>
-            </div>
+          {/* Trust indicators */}
+          <div className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground">
+            <span className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" /> No long-term contracts
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-secondary" /> 30-day money-back guarantee
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-neural" /> Free strategy session
+            </span>
           </div>
         </div>
       </div>
-
-      {/* Bottom Glow Effect */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50" />
     </section>
   );
 };

@@ -1,13 +1,14 @@
-import { 
-  Share2, 
-  Bot, 
-  Globe, 
-  FileText, 
-  PenTool, 
-  Video, 
+import {
+  Share2,
+  Bot,
+  Globe,
+  FileText,
+  PenTool,
+  Video,
   UserCheck,
   MessageSquare,
-  ArrowRight
+  ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import { CALENDLY_URL } from "@/lib/site";
 
 export const solutions = [
   {
@@ -86,136 +88,78 @@ export const solutions = [
   }
 ];
 
+const iconTile: Record<string, string> = {
+  primary: "bg-primary/15 text-primary",
+  secondary: "bg-secondary/15 text-secondary",
+  neural: "bg-neural/15 text-neural",
+  accent: "bg-accent/15 text-accent",
+};
+
 const Solutions = () => {
   const [selectedSolution, setSelectedSolution] = useState<typeof solutions[0] | null>(null);
 
   return (
-    <section id="solutions" className="py-24 relative overflow-hidden">
-      {/* Background Grid */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(hsl(var(--primary)/0.1) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--primary)/0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }} />
-      </div>
-
-      {/* Floating Background Elements */}
-      <div className="absolute top-20 left-10 w-40 h-40 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full blur-3xl float" />
-      <div className="absolute bottom-20 right-10 w-60 h-60 bg-gradient-to-tl from-neural/10 to-accent/10 rounded-full blur-3xl float-delayed" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="solutions" className="relative overflow-hidden py-24">
+      <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <h2 className="text-5xl md:text-6xl font-orbitron font-bold mb-6 text-gradient-primary">
-            Our AI-Powered Solutions
+        <div className="mx-auto mb-16 max-w-3xl text-center">
+          <span className="eyebrow mb-5">What we do</span>
+          <h2 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
+            AI solutions that <span className="text-gradient">do the work for you</span>
           </h2>
-          <div className="w-32 h-1 bg-gradient-to-r from-primary via-secondary to-neural rounded-full mx-auto mb-8" />
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            Transform your business with cutting-edge AI solutions designed to 
-            <span className="text-primary font-semibold"> automate</span>, 
-            <span className="text-secondary font-semibold"> optimize</span>, and 
-            <span className="text-neural font-semibold"> accelerate</span> your growth.
+          <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+            A complete toolkit to automate, optimize, and accelerate your growth — built and managed end to end.
           </p>
         </div>
 
         {/* Solutions Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {solutions.map((solution, index) => (
-            <div 
-              key={index}
-              className="card-ai group hover:cursor-pointer"
-              style={{ animationDelay: solution.delay }}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {solutions.map((solution) => (
+            <button
+              key={solution.title}
+              onClick={() => setSelectedSolution(solution)}
+              className="glass-card group flex flex-col items-start p-6 text-left"
             >
-              {/* Icon with Glow Effect */}
-              <div className="relative mb-6">
-                <div className={`
-                  absolute inset-0 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500
-                  ${solution.color === 'primary' ? 'bg-primary/30' : ''}
-                  ${solution.color === 'secondary' ? 'bg-secondary/30' : ''}
-                  ${solution.color === 'neural' ? 'bg-neural/30' : ''}
-                  ${solution.color === 'accent' ? 'bg-accent/30' : ''}
-                `} />
-                <solution.icon className={`
-                  relative w-12 h-12 group-hover:scale-110 transition-all duration-300
-                  ${solution.color === 'primary' ? 'text-primary' : ''}
-                  ${solution.color === 'secondary' ? 'text-secondary' : ''}
-                  ${solution.color === 'neural' ? 'text-neural' : ''}
-                  ${solution.color === 'accent' ? 'text-accent' : ''}
-                `} />
+              <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl ${iconTile[solution.color]}`}>
+                <solution.icon className="h-6 w-6" />
               </div>
 
-              {/* Content */}
-              <h3 className="font-orbitron font-bold text-xl mb-4 group-hover:text-glow transition-all duration-300">
-                {solution.title}
-              </h3>
-              
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <h3 className="font-display text-lg font-semibold">{solution.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                 {solution.description}
               </p>
 
-              {/* Learn More Button */}
-              <Button 
-                variant="ghost" 
-                className="w-full justify-between group-hover:bg-primary/10 group-hover:text-primary transition-all duration-300"
-                onClick={() => setSelectedSolution(solution)}
-              >
-                Learn More
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-2 transition-transform duration-300" />
-              </Button>
-
-              {/* Card Border Glow */}
-              <div className={`
-                absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10
-                ${solution.color === 'primary' ? 'shadow-[0_0_50px_hsl(var(--primary)/0.3)]' : ''}
-                ${solution.color === 'secondary' ? 'shadow-[0_0_50px_hsl(var(--secondary)/0.3)]' : ''}
-                ${solution.color === 'neural' ? 'shadow-[0_0_50px_hsl(var(--neural)/0.3)]' : ''}
-                ${solution.color === 'accent' ? 'shadow-[0_0_50px_hsl(var(--accent)/0.3)]' : ''}
-              `} />
-            </div>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+                Learn more
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </button>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center">
-          <p className="text-lg text-muted-foreground mb-8">
-            Ready to see how AI can transform your specific business needs?
+        <div className="mt-14 text-center">
+          <p className="mb-6 text-muted-foreground">
+            Not sure which fits your business? Let's map it out together.
           </p>
-          <Button asChild className="btn-ai-secondary">
-            <a 
-              href="https://calendly.com/fulsuccess/ai"
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-3"
-            >
-              Schedule Your Free Consultation
-              <ArrowRight className="w-5 h-5" />
-            </a>
-          </Button>
+          <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-glow">
+            Schedule Your Free Consultation
+            <ArrowRight className="h-5 w-5" />
+          </a>
         </div>
       </div>
 
       {/* Solution Details Dialog */}
       <Dialog open={!!selectedSolution} onOpenChange={() => setSelectedSolution(null)}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-h-[80vh] max-w-2xl overflow-y-auto border-white/10 bg-card/95 backdrop-blur-xl">
           <DialogHeader>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="mb-4 flex items-center gap-4">
               {selectedSolution && (
                 <>
-                  <div className={`
-                    p-3 rounded-lg
-                    ${selectedSolution.color === 'primary' ? 'bg-primary/10 text-primary' : ''}
-                    ${selectedSolution.color === 'secondary' ? 'bg-secondary/10 text-secondary' : ''}
-                    ${selectedSolution.color === 'neural' ? 'bg-neural/10 text-neural' : ''}
-                    ${selectedSolution.color === 'accent' ? 'bg-accent/10 text-accent' : ''}
-                  `}>
-                    <selectedSolution.icon className="w-8 h-8" />
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${iconTile[selectedSolution.color]}`}>
+                    <selectedSolution.icon className="h-6 w-6" />
                   </div>
-                  <DialogTitle className="text-2xl font-orbitron">
-                    {selectedSolution.title}
-                  </DialogTitle>
+                  <DialogTitle className="font-display text-2xl">{selectedSolution.title}</DialogTitle>
                 </>
               )}
             </div>
@@ -224,17 +168,10 @@ const Solutions = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="mt-6 flex justify-center">
-            <Button asChild className="btn-ai-secondary">
-              <a 
-                href="https://calendly.com/fulsuccess/ai" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-3"
-              >
-                Schedule a Consultation
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </Button>
+            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="btn-glow">
+              Schedule a Consultation
+              <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </DialogContent>
       </Dialog>

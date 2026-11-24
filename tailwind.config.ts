@@ -15,7 +15,9 @@ export default {
     extend: {
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],
-        'orbitron': ['Orbitron', 'monospace'],
+        'display': ['Space Grotesk', 'Inter', 'sans-serif'],
+        // Legacy alias — old components reference `font-orbitron`; map it to the new display font.
+        'orbitron': ['Space Grotesk', 'Inter', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
