@@ -28,10 +28,12 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        # Use `npm install` (not `npm ci`) so the Linux runner resolves its own
-        # platform-specific Rollup/esbuild binaries. A lockfile generated on another
-        # OS omits them, which breaks `npm ci` (npm/cli#4828).
-        run: npm install --no-audit --no-fund
+        # The committed lockfile is generated on Windows and omits the Linux-only
+        # optional binaries (e.g. @rollup/rollup-linux-x64-gnu), which breaks both
+        # `npm ci` and `npm install` on the runner (npm/cli#4828). Removing it here
+        # (after setup-node has used it for the cache key) lets npm resolve the
+        # correct platform binaries for Linux.
+        run: rm -f package-lock.json && npm install --no-audit --no-fund
 
       - name: Build
         run: npm run build
