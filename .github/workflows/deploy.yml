@@ -28,7 +28,10 @@ jobs:
           cache: "npm"
 
       - name: Install dependencies
-        run: npm ci
+        # Use `npm install` (not `npm ci`) so the Linux runner resolves its own
+        # platform-specific Rollup/esbuild binaries. A lockfile generated on another
+        # OS omits them, which breaks `npm ci` (npm/cli#4828).
+        run: npm install --no-audit --no-fund
 
       - name: Build
         run: npm run build
