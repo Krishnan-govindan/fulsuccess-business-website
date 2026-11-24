@@ -5,67 +5,63 @@
 @tailwind utilities;
 
 /* ============================================================
-   fulsuccess — Modern AI Automation Design System
-   A refined, premium dark theme. All colors are HSL tokens.
+   fulsuccess — Executive "Slate + Gold" Design System
+   Sophisticated cool-slate surfaces with warm gold accents.
+   All colors are HSL tokens.
    ============================================================ */
 
 @layer base {
   :root {
-    /* Surfaces */
-    --background: 229 42% 5%;          /* deep ink navy */
-    --foreground: 210 40% 98%;
+    /* Surfaces — cool graphite slate */
+    --background: 215 22% 8%;
+    --foreground: 40 25% 94%;
 
-    --card: 228 34% 8%;
-    --card-foreground: 210 40% 98%;
+    --card: 215 20% 11%;
+    --card-foreground: 40 25% 94%;
 
-    --popover: 228 34% 9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 215 20% 11%;
+    --popover-foreground: 40 25% 94%;
 
-    /* Brand accents (cohesive violet → cyan family) */
-    --primary: 258 90% 66%;            /* violet */
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 258 90% 76%;
+    /* Brand accent — warm gold family */
+    --primary: 43 96% 52%;             /* gold */
+    --primary-foreground: 220 35% 7%;  /* near-black slate text on gold */
+    --primary-glow: 43 96% 64%;
 
-    --secondary: 190 95% 50%;          /* cyan */
-    --secondary-foreground: 228 40% 6%;
-    --secondary-glow: 190 95% 65%;
+    --secondary: 36 92% 56%;           /* amber */
+    --secondary-foreground: 220 35% 7%;
+    --secondary-glow: 36 92% 68%;
 
-    --accent: 217 91% 60%;             /* blue */
-    --accent-foreground: 210 40% 98%;
-    --accent-glow: 217 91% 75%;
+    --accent: 30 74% 52%;              /* bronze */
+    --accent-foreground: 40 25% 94%;
+    --accent-glow: 30 74% 66%;
 
-    --neural: 160 84% 44%;             /* emerald */
-    --neural-glow: 160 84% 60%;
+    --neural: 45 62% 74%;              /* champagne */
+    --neural-glow: 45 62% 84%;
 
     /* Neutrals */
-    --muted: 222 24% 14%;
-    --muted-foreground: 217 18% 66%;
+    --muted: 215 14% 18%;
+    --muted-foreground: 40 9% 66%;
 
-    --border: 220 24% 18%;
-    --input: 220 24% 16%;
-    --ring: 258 90% 66%;
+    --border: 215 14% 20%;
+    --input: 215 14% 16%;
+    --ring: 43 96% 52%;
 
     /* Sidebar (shadcn) */
-    --sidebar-background: 228 34% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 258 90% 66%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 24% 14%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 220 24% 18%;
-    --sidebar-ring: 258 90% 66%;
+    --sidebar-background: 215 20% 11%;
+    --sidebar-foreground: 40 25% 94%;
+    --sidebar-primary: 43 96% 52%;
+    --sidebar-primary-foreground: 220 35% 7%;
+    --sidebar-accent: 215 14% 18%;
+    --sidebar-accent-foreground: 40 25% 94%;
+    --sidebar-border: 215 14% 20%;
+    --sidebar-ring: 43 96% 52%;
 
-    /* Google Sign-In branded dark button */
-    --google-button-background: #131314;
-    --google-button-border: #3a3a3c;
-    --google-button-foreground: #E3E3E3;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 40 25% 94%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(258 90% 66%), hsl(190 95% 55%));
-    --gradient-soft: linear-gradient(135deg, hsl(258 90% 66% / 0.15), hsl(190 95% 55% / 0.12));
+    /* Gradients — gold → bronze */
+    --gradient-primary: linear-gradient(135deg, hsl(45 97% 58%), hsl(32 88% 50%));
+    --gradient-soft: linear-gradient(135deg, hsl(43 96% 52% / 0.14), hsl(32 88% 50% / 0.10));
 
     /* Motion */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -86,14 +82,15 @@
   body {
     @apply bg-background text-foreground font-inter overflow-x-hidden antialiased;
     background-image:
-      radial-gradient(60rem 60rem at 15% -10%, hsl(var(--primary) / 0.12), transparent 60%),
-      radial-gradient(50rem 50rem at 100% 0%, hsl(var(--secondary) / 0.10), transparent 55%),
-      radial-gradient(45rem 45rem at 50% 120%, hsl(var(--accent) / 0.08), transparent 60%);
+      radial-gradient(60rem 60rem at 15% -10%, hsl(var(--primary) / 0.10), transparent 60%),
+      radial-gradient(50rem 50rem at 100% 0%, hsl(var(--secondary) / 0.08), transparent 55%),
+      radial-gradient(45rem 45rem at 50% 120%, hsl(var(--accent) / 0.07), transparent 60%);
     background-attachment: fixed;
   }
 
   ::selection {
     background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--primary-foreground));
   }
 
   /* Pretty, subtle scrollbar */
@@ -118,7 +115,7 @@
   }
 
   .text-gradient-neural {
-    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--neural)));
+    background: linear-gradient(135deg, hsl(45 97% 60%), hsl(45 62% 78%));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -150,11 +147,11 @@
     @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 font-semibold text-primary-foreground;
     background: var(--gradient-primary);
     @apply transition-all duration-300;
-    box-shadow: 0 8px 30px -8px hsl(var(--primary) / 0.6);
+    box-shadow: 0 8px 30px -8px hsl(var(--primary) / 0.55);
   }
   .btn-glow:hover {
     @apply -translate-y-0.5;
-    box-shadow: 0 14px 40px -8px hsl(var(--primary) / 0.75);
+    box-shadow: 0 14px 40px -8px hsl(var(--primary) / 0.7);
   }
 
   .btn-ghost-outline {

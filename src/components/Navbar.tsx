@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Menu, X, Calendar } from "lucide-react";
-import HeaderAuth from "@/components/HeaderAuth";
 import { CALENDLY_URL } from "@/lib/site";
 
 const links = [
@@ -59,7 +58,6 @@ const Navbar = () => {
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-3 lg:flex">
-          <HeaderAuth />
           <a
             href={CALENDLY_URL}
             target="_blank"
@@ -95,18 +93,15 @@ const Navbar = () => {
                 {l.label}
               </a>
             ))}
-            <div className="mt-3 flex items-center gap-3">
-              <HeaderAuth />
-              <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-glow flex-1 px-5 py-3 text-sm"
-              >
-                <Calendar className="h-4 w-4" />
-                Book a Call
-              </a>
-            </div>
+            <a
+              href={CALENDLY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-glow mt-3 px-5 py-3 text-sm"
+            >
+              <Calendar className="h-4 w-4" />
+              Book a Call
+            </a>
           </div>
         </div>
       )}
